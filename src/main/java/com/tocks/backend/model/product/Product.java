@@ -16,6 +16,10 @@ public class Product {
     protected String id;
     protected String key;
     protected String name;
+    protected String extended_name;
+    protected Images images;
+    protected Rating reviews;
+    protected Manufacturer manufacturer;
     protected String description;
     protected Manufacturer manufacturer;
     protected Prices prices;
