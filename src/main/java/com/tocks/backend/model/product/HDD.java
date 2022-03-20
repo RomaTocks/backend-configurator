@@ -1,6 +1,7 @@
 package com.tocks.backend.model.product;
 
 import com.tocks.backend.model.product.additional.HDDAdditionalInformation;
+import com.tocks.backend.model.product.additional.values.HDDAdditionalValues;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,4 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class HDD extends Product
 {
     private HDDAdditionalInformation additional;
+    private HDDAdditionalValues values;
 }

@@ -1,6 +1,7 @@
 package com.tocks.backend.model.product;
 
 import com.tocks.backend.model.product.additional.PSUAdditionalInformation;
+import com.tocks.backend.model.product.additional.values.PSUAdditionalValues;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,4 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PSU extends Product
 {
     private PSUAdditionalInformation additional;
+    private PSUAdditionalValues values;
 }

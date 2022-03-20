@@ -1,6 +1,7 @@
 package com.tocks.backend.model.product;
 
 import com.tocks.backend.model.product.additional.FanAdditionalInformation;
+import com.tocks.backend.model.product.additional.values.FanAdditionalValues;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,4 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Fan extends Product
 {
     private FanAdditionalInformation additional;
+    private FanAdditionalValues values;
 }

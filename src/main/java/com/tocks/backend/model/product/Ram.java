@@ -1,6 +1,7 @@
 package com.tocks.backend.model.product;
 
 import com.tocks.backend.model.product.additional.RamAdditionalInformation;
+import com.tocks.backend.model.product.additional.values.RamAdditionalValues;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,4 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Ram extends Product
 {
     private RamAdditionalInformation additional;
+    private RamAdditionalValues values;
 }

@@ -1,6 +1,7 @@
 package com.tocks.backend.model.product;
 
 import com.tocks.backend.model.product.additional.SSDAdditionalInformation;
+import com.tocks.backend.model.product.additional.values.SSDAdditionalValues;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,4 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SSD extends Product
 {
     private SSDAdditionalInformation additional;
+    private SSDAdditionalValues values;
 }
