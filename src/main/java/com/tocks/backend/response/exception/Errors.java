@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -14,36 +12,63 @@ import java.util.Set;
 public class Errors
 {
     private Integer count;
-    private Set<String> productsWarnings;
-    private Set<String> productsErrors;
-    private Set<String> productsInfo;
-    private List<ConfigurationException> errors;
+    private List<ConfigurationException> cpu;
+    private List<ConfigurationException> gpu;
+    private List<ConfigurationException> chassis;
+    private List<ConfigurationException> ram;
+    private List<ConfigurationException> hdd;
+    private List<ConfigurationException> ssd;
+    private List<ConfigurationException> fan;
+    private List<ConfigurationException> motherboard;
+    private List<ConfigurationException> psu;
 
     public Errors()
     {
-        productsErrors = new HashSet<>();
-        productsWarnings = new HashSet<>();
-        productsInfo = new HashSet<>();
-        errors = new ArrayList<>();
+        count = 0;
+        gpu = new ArrayList<>();
+        cpu = new ArrayList<>();
+        chassis = new ArrayList<>();
+        ram = new ArrayList<>();
+        hdd = new ArrayList<>();
+        ssd = new ArrayList<>();
+        fan = new ArrayList<>();
+        motherboard = new ArrayList<>();
+        psu = new ArrayList<>();
     }
-    public void addWarningProduct(String id) {
-        productsWarnings.add(id);
+    public void addGpuException(ConfigurationException exception) {
+        gpu.add(exception);
+        count++;
     }
-    public void addErrorProduct(String id) {
-        productsErrors.add(id);
+    public void addCpuException(ConfigurationException exception) {
+        cpu.add(exception);
+        count++;
     }
-    public void addInfoProduct(String id) {
-        productsInfo.add(id);
+    public void addChassisException(ConfigurationException exception) {
+        chassis.add(exception);
+        count++;
     }
-    public void addAllExceptions(List<ConfigurationException> exceptions) {
-        errors.addAll(exceptions);
+    public void addRamException(ConfigurationException exception) {
+        ram.add(exception);
+        count++;
     }
-    public void addException(ConfigurationException exception) {
-        errors.add(exception);
+    public void addHddException(ConfigurationException exception) {
+        hdd.add(exception);
+        count++;
     }
-    public void configureErrors() {
-        productsInfo.removeIf(info -> productsWarnings.contains(info));
-        productsInfo.removeIf(info -> productsErrors.contains(info));
-        productsWarnings.removeIf(warning -> productsErrors.contains(warning));
+    public void addSsdException(ConfigurationException exception) {
+        ssd.add(exception);
+        count++;
+    }
+    public void addFanException(ConfigurationException exception) {
+        fan.add(exception);
+        count++;
+    }
+    public void addMotherboardException(ConfigurationException exception) {
+        motherboard.add(exception);
+        count++;
+    }
+    public void addPsuException(ConfigurationException exception) {
+        psu.add(exception);
+        count++;
     }
 }
