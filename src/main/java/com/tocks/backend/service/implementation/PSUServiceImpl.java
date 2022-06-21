@@ -48,7 +48,10 @@ public class PSUServiceImpl implements PSUService
     {
         return psuRepository.findAllByPositionsNotNull();
     }
-
+    @Override
+    public Map<String, String> additionalInformation() {
+        return psuRepository.additional();
+    }
     @Override
     public ResponseEntity<Map<String, Object>> findAllBySellersNotNull()
     {

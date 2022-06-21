@@ -16,6 +16,7 @@ public interface FanService {
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);
     ResponseEntity<Object> findCPUById(String id);
     Fan findById(String id);
+    Map<String, String> additionalInformation();
     List<Filter> dynamicFilters();
     ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     void saveAll(List<Fan> fans);

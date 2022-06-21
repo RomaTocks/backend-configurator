@@ -51,7 +51,10 @@ public class GraphicCardServiceImpl implements GraphicCardService
         Page<GraphicCard> cpuPage = graphicCardRepository.dynamicQuery(request.getParameterMap(),pageable);
         return configureResponseWithParameters(cpuPage,request.getRequestURL().toString(),request.getParameterMap());
     }
-
+    @Override
+    public Map<String, String> additionalInformation() {
+        return graphicCardRepository.additional();
+    }
     @Override
     public ResponseEntity<Map<String, Object>> findAllBySellersNotNull()
     {

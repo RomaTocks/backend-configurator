@@ -98,8 +98,6 @@ public class ConfigurationServiceImpl
         checkMotherboard(configuration, errors);
         checkCPU(configuration, errors);
         checkPSU(configuration, errors);
-        errors.setCount(errors.getErrors().size());
-        errors.configureErrors();
         configurationInfo.put("error", errors);
         configurationInfo.put("configuration", configuration);
         return new ResponseEntity<>(configurationInfo, HttpStatus.ACCEPTED);
@@ -268,9 +266,6 @@ public class ConfigurationServiceImpl
                                 ConfigurationException freqWarning = new ConfigurationException("warning", cpu.getName(), ram.getName(), "Процессор поддерживает частоту до " + additional.getRamFrequency() + ".");
                                 errors.addRamException(freqWarning);
                             }
-                        }
-                        else {
-
                         }
                     }
                     if(ramAdditional != null) {

@@ -47,13 +47,11 @@ public class HDDServiceImpl implements HDDService
         map.put("total", (long) list.size());
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
     @Override
     public ResponseEntity<Map<String, Object>> findAllBySellersNotNull(Pageable pageable, String URL)
     {
         return configureResponse(hddRepository.findAllByPositionsNotNull(pageable),URL);
     }
-
     @Override
     public ResponseEntity<Object> findCPUById(String id)
     {

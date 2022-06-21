@@ -17,6 +17,7 @@ public interface GraphicCardService {
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);
     ResponseEntity<Object> findCPUById(String id);
     GraphicCard findById(String id);
+    Map<String, String> additionalInformation();
     List<Filter> dynamicFilters();
     void saveAll(List<GraphicCard> graphicCards);
 }

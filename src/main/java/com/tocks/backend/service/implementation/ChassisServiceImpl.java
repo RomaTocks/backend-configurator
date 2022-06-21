@@ -78,7 +78,10 @@ public class ChassisServiceImpl implements ChassisService
             return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
-
+    @Override
+    public Map<String, String> additionalInformation() {
+        return chassisRepository.additional();
+    }
     @Override
     public Chassis findById(String id)
     {

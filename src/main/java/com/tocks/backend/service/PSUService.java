@@ -17,6 +17,7 @@ public interface PSUService {
     ResponseEntity<Object> findCPUById(String id);
     PSU findById(String id);
     List<Filter> dynamicFilters();
+    Map<String, String> additionalInformation();
     ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     void saveAll(List<PSU> psus);
 }

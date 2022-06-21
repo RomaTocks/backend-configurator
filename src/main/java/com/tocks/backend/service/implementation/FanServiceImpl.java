@@ -49,7 +49,10 @@ public class FanServiceImpl implements FanService
     public List<Filter> dynamicFilters() {
         return fanRepository.filters();
     }
-
+    @Override
+    public Map<String, String> additionalInformation() {
+        return fanRepository.additional();
+    }
     @Override
     public ResponseEntity<Map<String, Object>> findAllBySellersNotNull()
     {

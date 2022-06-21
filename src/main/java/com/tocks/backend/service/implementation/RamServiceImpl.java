@@ -48,7 +48,10 @@ public class RamServiceImpl implements RamService
     {
         return ramRepository.findAllByPositionsNotNull();
     }
-
+    @Override
+    public Map<String, String> additionalInformation() {
+        return ramRepository.additional();
+    }
     @Override
     public ResponseEntity<Map<String, Object>> findAllBySellersNotNull()
     {

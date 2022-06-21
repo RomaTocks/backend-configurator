@@ -13,11 +13,12 @@ public interface CpuService
 {
     List<CPU> findAll();
     List<CPU> findAllByPositionsNotNull();
-    ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);
     ResponseEntity<Object> findCPUById(String id);
     CPU findById(String id);
+    Map<String, String> additionalInformation();
     List<Filter> dynamicFilters();
+    ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     void saveAll(List<CPU> cpus);
 }

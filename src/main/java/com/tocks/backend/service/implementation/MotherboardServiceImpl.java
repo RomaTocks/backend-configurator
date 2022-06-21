@@ -48,7 +48,10 @@ public class MotherboardServiceImpl implements MotherboardService
     {
         return motherboardRepository.findAllByPositionsNotNull();
     }
-
+    @Override
+    public Map<String, String> additionalInformation() {
+        return motherboardRepository.additional();
+    }
     @Override
     public ResponseEntity<Map<String, Object>> findAllBySellersNotNull()
     {

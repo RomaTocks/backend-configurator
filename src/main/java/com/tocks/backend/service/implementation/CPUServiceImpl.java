@@ -85,6 +85,11 @@ public class CPUServiceImpl implements CpuService
     }
 
     @Override
+    public Map<String, String> additionalInformation() {
+        return repository.additional();
+    }
+
+    @Override
     public void saveAll(List<CPU> cpus) {
         repository.saveAll(cpus);
     }

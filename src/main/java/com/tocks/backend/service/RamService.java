@@ -17,6 +17,7 @@ public interface RamService {
     ResponseEntity<Object> findCPUById(String id);
     Ram findById(String id);
     List<Filter> dynamicFilters();
+    Map<String, String> additionalInformation();
     ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     void saveAll(List<Ram> rams);
 }

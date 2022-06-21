@@ -18,6 +18,7 @@ public interface ChassisService
     ResponseEntity<Object> findCPUById(String id);
     Chassis findById(String id);
     List<Filter> dynamicFilters();
+    Map<String, String> additionalInformation();
     ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     void saveAll(List<Chassis> cpus);
 }
