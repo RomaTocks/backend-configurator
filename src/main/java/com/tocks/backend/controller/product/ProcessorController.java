@@ -1,7 +1,7 @@
 package com.tocks.backend.controller.product;
 
-import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.service.CpuService;
+import com.tocks.backend.service.FilterService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,11 @@ import java.util.Map;
 public class ProcessorController
 {
     private final CpuService service;
+    private final FilterService filterService;
 
-    public ProcessorController(CpuService service) {
+    public ProcessorController(CpuService service, FilterService filterService) {
         this.service = service;
+        this.filterService = filterService;
     }
 
     @GetMapping("/cpu")
@@ -26,6 +28,11 @@ public class ProcessorController
         return request.getParameter("page") != null && !request.getParameter("page").equals("0")
                 ? service.findAllBySellersNotNull(pageable,request.getRequestURL().toString())
                 : service.findAllBySellersNotNull();
+    }
+    @GetMapping("/cpu/additional")
+    @CrossOrigin()
+    public Map<String, String> additionalOfCPU() {
+        return service.additionalInformation();
     }
     @GetMapping("dynamic/cpu")
     @CrossOrigin()
@@ -36,8 +43,8 @@ public class ProcessorController
     }
     @GetMapping("filters/cpu")
     @CrossOrigin()
-    public List<Filter> filtersList() {
-        return service.dynamicFilters();
+    public List<?> filtersList() {
+        return filterService.getProductFilters("cpu").getFilters();
     }
     @GetMapping("/cpu/{id}")
     @CrossOrigin()

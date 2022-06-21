@@ -1,6 +1,6 @@
 package com.tocks.backend.controller.product;
 
-import com.tocks.backend.model.common.filters.Filter;
+import com.tocks.backend.service.FilterService;
 import com.tocks.backend.service.MotherboardService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,18 +16,26 @@ import java.util.Map;
 public class MotherboardController
 {
     private final MotherboardService motherboardService;
+    private final FilterService filterService;
 
-    public MotherboardController(MotherboardService motherboardService)
+    public MotherboardController(MotherboardService motherboardService, FilterService filterService)
     {
         this.motherboardService = motherboardService;
+        this.filterService = filterService;
     }
     @GetMapping("/motherboard")
     public ResponseEntity<Map<String, Object>> findAllMotherboardsPageable(@PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
         return request.getParameter("page") != null && !request.getParameter("page").equals("0") ? motherboardService.findAllBySellersNotNull(pageable,request.getRequestURL().toString()) : motherboardService.findAllBySellersNotNull();
     }
     @GetMapping("/motherboard/{id}")
+    @CrossOrigin()
     public ResponseEntity<Object> findMotherboardById(@PathVariable String id){
         return motherboardService.findCPUById(id);
+    }
+    @GetMapping("/motherboard/additional")
+    @CrossOrigin()
+    public Map<String, String> additional() {
+        return motherboardService.additionalInformation();
     }
     @GetMapping("dynamic/motherboard")
     @CrossOrigin()
@@ -38,7 +46,7 @@ public class MotherboardController
     }
     @GetMapping("filters/motherboard")
     @CrossOrigin()
-    public List<Filter> filtersList() {
-        return motherboardService.dynamicFilters();
+    public List<?> filtersList() {
+        return filterService.getProductFilters("motherboard").getFilters();
     }
 }

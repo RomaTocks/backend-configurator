@@ -1,6 +1,6 @@
 package com.tocks.backend.controller.product;
 
-import com.tocks.backend.model.common.filters.Filter;
+import com.tocks.backend.service.FilterService;
 import com.tocks.backend.service.GraphicCardService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,10 +16,12 @@ import java.util.Map;
 public class GraphicCardController
 {
     private final GraphicCardService graphicCardService;
+    private final FilterService filterService;
 
-    public GraphicCardController(GraphicCardService graphicCardService)
+    public GraphicCardController(GraphicCardService graphicCardService, FilterService filterService)
     {
         this.graphicCardService = graphicCardService;
+        this.filterService = filterService;
     }
 
     @GetMapping("/gpu")
@@ -27,6 +29,7 @@ public class GraphicCardController
         return request.getParameter("page") != null && !request.getParameter("page").equals("0") ? graphicCardService.findAllBySellersNotNull(pageable,request.getRequestURL().toString()) : graphicCardService.findAllBySellersNotNull();
     }
     @GetMapping("/gpu/{id}")
+    @CrossOrigin()
     public ResponseEntity<Object> findGraphicCardById(@PathVariable String id){
         return graphicCardService.findCPUById(id);
     }
@@ -37,9 +40,14 @@ public class GraphicCardController
                 ? graphicCardService.dynamicFindAll(pageable, request)
                 : graphicCardService.findAllBySellersNotNull();
     }
+    @GetMapping("/gpu/additional")
+    @CrossOrigin()
+    public Map<String, String> additional() {
+        return graphicCardService.additionalInformation();
+    }
     @GetMapping("filters/gpu")
     @CrossOrigin()
-    public List<Filter> filtersList() {
+    public List<?> filtersList() {
         return graphicCardService.dynamicFilters();
     }
 }

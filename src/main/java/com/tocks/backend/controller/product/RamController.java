@@ -1,6 +1,6 @@
 package com.tocks.backend.controller.product;
 
-import com.tocks.backend.model.common.filters.Filter;
+import com.tocks.backend.service.FilterService;
 import com.tocks.backend.service.RamService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,10 +16,12 @@ import java.util.Map;
 public class RamController
 {
     private final RamService ramService;
+    private final FilterService filterService;
 
-    public RamController(RamService ramService)
+    public RamController(RamService ramService, FilterService filterService)
     {
         this.ramService = ramService;
+        this.filterService = filterService;
     }
     @GetMapping("/ram")
     public ResponseEntity<Map<String, Object>> findAllRamPageable(@PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
@@ -28,6 +30,11 @@ public class RamController
     @GetMapping("/ram/{id}")
     public ResponseEntity<Object> findRamById(@PathVariable String id){
         return ramService.findCPUById(id);
+    }
+    @GetMapping("/ram/additional")
+    @CrossOrigin()
+    public Map<String, String> additional() {
+        return ramService.additionalInformation();
     }
     @GetMapping("dynamic/ram")
     @CrossOrigin()
@@ -38,7 +45,7 @@ public class RamController
     }
     @GetMapping("filters/ram")
     @CrossOrigin()
-    public List<Filter> filtersList() {
-        return ramService.dynamicFilters();
+    public List<?> filtersList() {
+        return filterService.getProductFilters("ram").getFilters();
     }
 }
