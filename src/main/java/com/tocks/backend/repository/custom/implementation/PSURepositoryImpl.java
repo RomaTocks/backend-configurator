@@ -53,7 +53,13 @@ public class PSURepositoryImpl implements PSURepositoryCustom
         List<PSU> psu = mongoTemplate.find(query, PSU.class);
         return PageableExecutionUtils.getPage(psu, pageable, count(query, mongoTemplate, PSU.class));
     }
-
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return  fullMap;
+    }
     public List<Filter> filters()
     {
         Query query = new Query();

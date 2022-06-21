@@ -50,7 +50,7 @@ public class DefaultCriteria
                     break;
                 }
                 case "rating" : {
-
+                    query.with(Sort.by("reviews.rating").descending());
                 }
                 default: {
                     break;

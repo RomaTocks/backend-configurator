@@ -32,8 +32,10 @@ public class RamRepositoryImpl implements RamRepositoryCustom
     ));
     private final Map<String, String> INT_RANGE_MAP = new HashMap<>(Map.ofEntries(
             new AbstractMap.SimpleEntry<>("Набор", "kit"),
-            new AbstractMap.SimpleEntry<>("Рабочая частота", "frequency")
-    ));
+            new AbstractMap.SimpleEntry<>("Рабочая частота", "frequency"),
+            new AbstractMap.SimpleEntry<>("Общий объем", "value"),
+            new AbstractMap.SimpleEntry<>("Объем одного модуля", "singleValue")
+            ));
     private final Map<String, String> DOUBLE_RANGE_MAP = new HashMap<>(Map.ofEntries(
     ));
 
@@ -50,7 +52,13 @@ public class RamRepositoryImpl implements RamRepositoryCustom
         List<Ram> ram = mongoTemplate.find(query, Ram.class);
         return PageableExecutionUtils.getPage(ram, pageable, count(query, mongoTemplate, Ram.class));
     }
-
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return  fullMap;
+    }
     public List<Filter> filters()
     {
         Query query = new Query();

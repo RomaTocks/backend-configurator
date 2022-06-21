@@ -12,4 +12,5 @@ public interface MotherboardRepositoryCustom
 {
     Page<Motherboard> dynamicQuery(Map<String, String[]> parameterMap, Pageable pageable);
     List<Filter> filters();
+    Map<String, String> additional();
 }

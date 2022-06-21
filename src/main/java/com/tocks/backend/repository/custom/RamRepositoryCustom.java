@@ -12,4 +12,5 @@ public interface RamRepositoryCustom
 {
     Page<Ram> dynamicQuery(Map<String, String[]> parameterMap, Pageable pageable);
     List<Filter> filters();
+    Map<String, String> additional();
 }

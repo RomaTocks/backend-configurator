@@ -56,6 +56,13 @@ public class FanRepositoryImpl implements FanRepositoryCustom
         List<Fan> fans = mongoTemplate.find(query, Fan.class);
         return PageableExecutionUtils.getPage(fans, pageable, count(query, mongoTemplate, Fan.class));
     }
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return  fullMap;
+    }
     public List<Filter> filters() {
         Query query = new Query();
         List<Fan> fans = mongoTemplate.find(query, Fan.class);

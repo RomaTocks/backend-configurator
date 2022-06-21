@@ -66,6 +66,13 @@ public class CPURepositoryImpl implements CPURepositoryCustom
         return PageableExecutionUtils.getPage(cpus, pageable, count(query, mongoTemplate, CPU.class));
     }
 
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return  fullMap;
+    }
     public List<Filter> filters() {
         Query query = new Query();
         List<CPU> cpus = mongoTemplate.find(query, CPU.class);

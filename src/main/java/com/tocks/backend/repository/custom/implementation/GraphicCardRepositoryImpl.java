@@ -63,6 +63,13 @@ public class GraphicCardRepositoryImpl implements GraphicCardRepositoryCustom
         List<GraphicCard> graphicCards = mongoTemplate.find(query, GraphicCard.class);
         return PageableExecutionUtils.getPage(graphicCards, pageable, count(query, mongoTemplate, GraphicCard.class));
     }
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return  fullMap;
+    }
     public List<Filter> filters()
     {
         Query query = new Query();

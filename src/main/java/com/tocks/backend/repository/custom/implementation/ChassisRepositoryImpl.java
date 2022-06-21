@@ -55,8 +55,14 @@ public class ChassisRepositoryImpl implements ChassisRepositoryCustom
         List<Chassis> chassises = mongoTemplate.find(query, Chassis.class);
         return PageableExecutionUtils.getPage(chassises, pageable, count(query, mongoTemplate, Chassis.class));
     }
-    public List<Filter> filters()
-    {
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return fullMap;
+    }
+    public List<Filter> filters() {
         Query query = new Query();
         List<Chassis> chassises = mongoTemplate.find(query, Chassis.class);
         return getFilters(chassises, IN_MAP, INT_RANGE_MAP, DOUBLE_RANGE_MAP);

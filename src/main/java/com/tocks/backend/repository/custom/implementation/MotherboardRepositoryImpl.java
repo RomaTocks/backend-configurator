@@ -53,6 +53,13 @@ public class MotherboardRepositoryImpl implements MotherboardRepositoryCustom
         List<Motherboard> motherboards = mongoTemplate.find(query, Motherboard.class);
         return PageableExecutionUtils.getPage(motherboards, pageable, count(query, mongoTemplate, Motherboard.class));
     }
+    public Map<String, String> additional() {
+        Map<String, String> fullMap = new HashMap<>();
+        fullMap.putAll(IN_MAP);
+        fullMap.putAll(INT_RANGE_MAP);
+        fullMap.putAll(DOUBLE_RANGE_MAP);
+        return  fullMap;
+    }
     public List<Filter> filters() {
         Query query = new Query();
         List<Motherboard> motherboards = mongoTemplate.find(query, Motherboard.class);
