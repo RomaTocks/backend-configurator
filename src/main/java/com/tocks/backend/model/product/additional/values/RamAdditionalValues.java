@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 public class RamAdditionalValues extends Values
 {
     Integer kit;
+    Integer value;
+    Integer singleValue;
     Integer frequency;
 }
