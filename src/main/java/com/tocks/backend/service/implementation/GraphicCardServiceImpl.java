@@ -3,7 +3,7 @@ package com.tocks.backend.service.implementation;
 import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.model.product.GraphicCard;
 import com.tocks.backend.repository.common.GraphicCardRepository;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 import com.tocks.backend.service.GraphicCardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +37,12 @@ public class GraphicCardServiceImpl implements GraphicCardService
     public List<GraphicCard> findAll()
     {
         return graphicCardRepository.findAll();
+    }
+
+    @Override
+    public List<GraphicCard> findAllById(List<String> ids)
+    {
+        return (List<GraphicCard>) graphicCardRepository.findAllById(ids);
     }
 
     @Override
@@ -78,7 +84,7 @@ public class GraphicCardServiceImpl implements GraphicCardService
             return new ResponseEntity<>(graphicCardRepository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
 

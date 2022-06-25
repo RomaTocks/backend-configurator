@@ -11,6 +11,7 @@ import java.util.Map;
 
 public interface FanService {
     List<Fan> findAll();
+    List<Fan> findAllById(List<String> ids);
     List<Fan> findAllByPositionsNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);

@@ -4,7 +4,7 @@ package com.tocks.backend.service.implementation;
 import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.model.product.Chassis;
 import com.tocks.backend.repository.common.ChassisRepository;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 import com.tocks.backend.service.ChassisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +36,12 @@ public class ChassisServiceImpl implements ChassisService
     public List<Chassis> findAll()
     {
         return chassisRepository.findAll();
+    }
+
+    @Override
+    public List<Chassis> findAllById(List<String> ids)
+    {
+       return (List<Chassis>) chassisRepository.findAllById(ids);
     }
 
     public ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request) {
@@ -75,7 +81,7 @@ public class ChassisServiceImpl implements ChassisService
             return new ResponseEntity<>(chassisRepository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
     @Override

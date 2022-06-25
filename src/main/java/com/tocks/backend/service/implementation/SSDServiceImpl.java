@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +61,7 @@ public class SSDServiceImpl implements SSDService
             return new ResponseEntity<>(ssdRepository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
 

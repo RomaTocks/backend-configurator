@@ -11,6 +11,7 @@ import java.util.Map;
 
 public interface MotherboardService {
     List<Motherboard> findAll();
+    List<Motherboard> findAllById(List<String> ids);
     List<Motherboard> findAllByPositionsNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);

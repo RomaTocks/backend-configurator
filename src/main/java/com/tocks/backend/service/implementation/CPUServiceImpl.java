@@ -3,7 +3,7 @@ package com.tocks.backend.service.implementation;
 import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.model.product.CPU;
 import com.tocks.backend.repository.common.CPURepository;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 import com.tocks.backend.service.CpuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,6 +45,12 @@ public class CPUServiceImpl implements CpuService
     }
 
     @Override
+    public List<CPU> findAllById(List<String> ids)
+    {
+        return (List<CPU>) repository.findAllById(ids);
+    }
+
+    @Override
     public List<CPU> findAllByPositionsNotNull()
     {
         return repository.findAllByPositionsNotNull();
@@ -71,7 +77,7 @@ public class CPUServiceImpl implements CpuService
             return new ResponseEntity<>(repository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
 

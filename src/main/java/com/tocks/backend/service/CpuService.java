@@ -12,6 +12,7 @@ import java.util.Map;
 public interface CpuService
 {
     List<CPU> findAll();
+    List<CPU> findAllById(List<String> ids);
     List<CPU> findAllByPositionsNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);

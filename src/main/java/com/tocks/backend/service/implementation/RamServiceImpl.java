@@ -3,7 +3,7 @@ package com.tocks.backend.service.implementation;
 import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.model.product.Ram;
 import com.tocks.backend.repository.common.RamRepository;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 import com.tocks.backend.service.RamService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +33,12 @@ public class RamServiceImpl implements RamService
     public List<Ram> findAll()
     {
         return ramRepository.findAll();
+    }
+
+    @Override
+    public List<Ram> findAllById(List<String> ids)
+    {
+        return (List<Ram>) ramRepository.findAllById(ids);
     }
 
     public ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request) {
@@ -75,7 +81,7 @@ public class RamServiceImpl implements RamService
             return new ResponseEntity<>(ramRepository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
 

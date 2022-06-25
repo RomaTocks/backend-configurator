@@ -3,7 +3,7 @@ package com.tocks.backend.service.implementation;
 import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.model.product.PSU;
 import com.tocks.backend.repository.common.PSURepository;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 import com.tocks.backend.service.PSUService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +33,12 @@ public class PSUServiceImpl implements PSUService
     public List<PSU> findAll()
     {
         return psuRepository.findAll();
+    }
+
+    @Override
+    public List<PSU> findAllById(List<String> ids)
+    {
+        return (List<PSU>) psuRepository.findAllById(ids);
     }
 
     public ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request) {
@@ -75,7 +81,7 @@ public class PSUServiceImpl implements PSUService
             return new ResponseEntity<>(psuRepository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
 

@@ -12,6 +12,7 @@ import java.util.Map;
 public interface ChassisService
 {
     List<Chassis> findAll();
+    List<Chassis> findAllById(List<String> ids);
     List<Chassis> findAllByPositionsNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull();
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull(Pageable pageable, String URL);

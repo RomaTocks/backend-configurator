@@ -11,6 +11,7 @@ import java.util.Map;
 
 public interface GraphicCardService {
     List<GraphicCard> findAll();
+    List<GraphicCard> findAllById(List<String> ids);
     List<GraphicCard> findAllByPositionsNotNull();
     ResponseEntity<Map<String, Object>> dynamicFindAll(Pageable pageable, HttpServletRequest request);
     ResponseEntity<Map<String,Object>> findAllBySellersNotNull();

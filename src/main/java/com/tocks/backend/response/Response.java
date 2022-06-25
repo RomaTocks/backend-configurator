@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class Response
     private static ResponseEntity<Map<String, Object>> getMapResponseEntity(Page<?> page, Integer totalPages, Integer items, HashMap<String, Object> map, HashMap<String, String> links)
     {
         if (page.getNumberOfElements() == 0) {
-            map.put("error", new RequestException("Данная страница не существует!"));
+            map.put("error", new MessageResponse("Данная страница не существует!"));
             map.put("pages", totalPages);
             map.put("items", items);
             map.put("links",links);

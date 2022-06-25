@@ -3,7 +3,7 @@ package com.tocks.backend.service.implementation;
 import com.tocks.backend.model.common.filters.Filter;
 import com.tocks.backend.model.product.Fan;
 import com.tocks.backend.repository.common.FanRepository;
-import com.tocks.backend.response.exception.RequestException;
+import com.tocks.backend.response.exception.MessageResponse;
 import com.tocks.backend.service.FanService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +34,12 @@ public class FanServiceImpl implements FanService
     public List<Fan> findAll()
     {
         return fanRepository.findAll();
+    }
+
+    @Override
+    public List<Fan> findAllById(List<String> ids)
+    {
+        return (List<Fan>) fanRepository.findAllById(ids);
     }
 
     @Override
@@ -76,7 +82,7 @@ public class FanServiceImpl implements FanService
             return new ResponseEntity<>(fanRepository.findById(id).get(), HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new RequestException("Продукт с id : " + id + " не найден."), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Продукт с id : " + id + " не найден."), HttpStatus.OK);
         }
     }
 
