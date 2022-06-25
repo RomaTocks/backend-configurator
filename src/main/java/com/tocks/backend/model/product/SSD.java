@@ -5,7 +5,7 @@ import com.tocks.backend.model.product.additional.values.SSDAdditionalValues;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "ram")
+@Document(collection = "ssd")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
