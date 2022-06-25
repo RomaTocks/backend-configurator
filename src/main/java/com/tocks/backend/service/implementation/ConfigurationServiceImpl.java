@@ -1,6 +1,12 @@
 package com.tocks.backend.service.implementation;
 
+import com.tocks.backend.dto.configuration.CheckedConfigurationResponse;
+import com.tocks.backend.dto.configuration.PreparedConfigurationResponse;
+import com.tocks.backend.dto.configuration.UserConfigurationsRequest;
+import com.tocks.backend.dto.configuration.UserConfigurationsResponse;
+import com.tocks.backend.dto.favourite.FavouriteProductsResponse;
 import com.tocks.backend.model.configuration.Configuration;
+import com.tocks.backend.model.configuration.PreparedConfiguration;
 import com.tocks.backend.model.product.*;
 import com.tocks.backend.model.product.additional.*;
 import com.tocks.backend.model.product.additional.values.*;
@@ -13,8 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ConfigurationServiceImpl
@@ -42,6 +48,39 @@ public class ConfigurationServiceImpl
         this.ssdService = ssdService;
     }
 
+    public FavouriteProductsResponse findAllFavouriteProducts(FavouriteProducts favouriteProducts) {
+        FavouriteProductsResponse response = new FavouriteProductsResponse();
+        if(!favouriteProducts.getFan().isEmpty()) {
+            List<Fan> fans = fanService.findAllById(favouriteProducts.getFan());
+            response.setFan(fans);
+        }
+        if(!favouriteProducts.getCpu().isEmpty()) {
+            List<CPU> cpus = cpuService.findAllById(favouriteProducts.getCpu());
+
+            response.setCpu(cpus);
+        }
+        if(!favouriteProducts.getChassis().isEmpty()) {
+            List<Chassis> chassis = chassisService.findAllById(favouriteProducts.getChassis());
+            response.setChassis(chassis);
+        }
+        if(!favouriteProducts.getMotherboard().isEmpty()) {
+            List<Motherboard> motherboards = motherboardService.findAllById(favouriteProducts.getMotherboard());
+            response.setMotherboard(motherboards);
+        }
+        if(!favouriteProducts.getPsu().isEmpty()) {
+            List<PSU> psus = psuService.findAllById(favouriteProducts.getPsu());
+            response.setPsu(psus);
+        }
+        if(!favouriteProducts.getRam().isEmpty()) {
+            List<Ram> rams = ramService.findAllById(favouriteProducts.getRam());
+            response.setRam(rams);
+        }
+        if(!favouriteProducts.getGraphicCard().isEmpty()) {
+            List<GraphicCard> graphicCards = graphicCardService.findAllById(favouriteProducts.getGraphicCard());
+            response.setGraphicCard(graphicCards);
+        }
+        return response;
+    }
     public void findConfigurationElements(Configuration configuration) {
         if(configuration.getGraphicCard() != null) {
             GraphicCard graphicCard = configuration.getGraphicCard();
@@ -89,8 +128,29 @@ public class ConfigurationServiceImpl
            configuration.setChassis(chassis);
        }
     }
-    public ResponseEntity<Map<String, Object>> checkConfiguration(Configuration configuration) {
-        Map<String, Object> configurationInfo = new HashMap<>();
+    public ResponseEntity<UserConfigurationsResponse> getUserConfigurations(UserConfigurationsRequest userConfigurationsRequest) {
+        UserConfigurationsResponse userConfigurationsResponse = new UserConfigurationsResponse();
+        List<PreparedConfiguration> preparedConfigurations = userConfigurationsRequest.getConfigurations();
+        System.out.println(preparedConfigurations);
+        List<PreparedConfigurationResponse> preparedConfigurationResponses = preparedConfigurations.stream().map(preparedConfiguration -> {
+            CheckedConfigurationResponse checkedConfigurationResponse = checkConfiguration(preparedConfiguration.getConfiguration()).getBody();
+            if(checkedConfigurationResponse != null) {
+                PreparedConfigurationResponse newPreparedConfiguration = new PreparedConfigurationResponse();
+                newPreparedConfiguration.setId(preparedConfiguration.getId());
+                newPreparedConfiguration.setName(preparedConfiguration.getName());
+                newPreparedConfiguration.setError(checkedConfigurationResponse.getError());
+                newPreparedConfiguration.setConfiguration(checkedConfigurationResponse.getConfiguration());
+                newPreparedConfiguration.setPositions(preparedConfiguration.getPositions());
+                return newPreparedConfiguration;
+            }
+            return null;
+        }).toList();
+        preparedConfigurations.removeIf(Objects::isNull);
+        userConfigurationsResponse.setConfigurations(preparedConfigurationResponses);
+        return new ResponseEntity<>(userConfigurationsResponse, HttpStatus.OK);
+    }
+    public ResponseEntity<CheckedConfigurationResponse> checkConfiguration(Configuration configuration) {
+        CheckedConfigurationResponse checkedConfigurationResponse = new CheckedConfigurationResponse();
         Errors errors = new Errors();
         findConfigurationElements(configuration);
         System.out.println(configuration);
@@ -98,9 +158,9 @@ public class ConfigurationServiceImpl
         checkMotherboard(configuration, errors);
         checkCPU(configuration, errors);
         checkPSU(configuration, errors);
-        configurationInfo.put("error", errors);
-        configurationInfo.put("configuration", configuration);
-        return new ResponseEntity<>(configurationInfo, HttpStatus.ACCEPTED);
+        checkedConfigurationResponse.setError(errors);
+        checkedConfigurationResponse.setConfiguration(configuration);
+        return new ResponseEntity<>(checkedConfigurationResponse, HttpStatus.ACCEPTED);
     }
     public void checkChassis(Configuration configuration, Errors errors) {
         if(configuration.getChassis() != null) {
