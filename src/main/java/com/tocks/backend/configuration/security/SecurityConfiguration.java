@@ -18,7 +18,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
     @Autowired
     private JwtFilter jwtFilter;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -27,6 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/user/*").hasRole("USER")
                 .antMatchers("/register", "/auth").permitAll()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
